@@ -13,7 +13,26 @@ The trained models can be downloaded under the following link: https://drive.goo
 
 Place them in checkpoints directory. 
 
-# Predict Notebook
+# Reproduce Competiton Results: The Predict Notebook
+The predict.ibynb notebook reproduces the competiton results.  
+Make sure you have the models downloaded and placed in the checkpoints folder together with their PARAM Files.
+This Notebook is the foundation for the docker container.
+
+# Training Procedure
+If you want to understand the training-process and retrain the models yourself.
+The process is split into three steps: 
+1. Generate the DataSet and the Leave-Out-DataSet (data_gen.ipynb)
+2. Train the Model with the configurations from the paper (train.ipynb)
+3. Calculate the optimal Threshold of the Ensemble (Ensemble_eval_and_predict.ipynb)
+
+
+## Data Gen
+
+## Train 
+
+## Ensemble_Eval
+
+
 
 
 
