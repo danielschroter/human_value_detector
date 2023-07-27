@@ -33,10 +33,18 @@ The process is split into three steps:
 3. Calculate the optimal Threshold of the Ensemble (Ensemble_eval_and_predict.ipynb)
 
 ## Data Gen
+Cleans the data and creates the training and test files
 
-## Train 
+## Train
+Train the model train.ipynb
 
 ## Ensemble_Eval
+Ensemble the individual models and create predictions in ensembling_and_predict.ipynb
+
+# Explanations
+Run explanations.ipynb to create LOCO and LIME explanations. They are visualized with the SHAP library to use them in a survey. Further we calculate the comprehensiveness scores and AOPC
+
+
 
 
 
