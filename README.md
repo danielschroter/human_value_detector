@@ -4,6 +4,8 @@ This Repo contains the best performing system (Adam-Smith) of SemEval2023 Task 4
 
 Link to competition: https://touche.webis.de/semeval23/touche23-web/index.html
 
+You can also use our Huggingface Model for simple usage at: https://huggingface.co/tum-nlp/Deberta_Human_Value_Detector 
+
 # Set Up Project 
 
 ## Install dependencies
