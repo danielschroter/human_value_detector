@@ -16,19 +16,18 @@ pip install -r requirements.txt
 
 ## 1. Get Data
 
-Get Test Data from Competition and place it in data directory: https://zenodo.org/record/7550385/files/arguments-test.tsv?download=1
+Get Data from Competition and place it in data directory: https://zenodo.org/record/7550385
 
 ## 2. Get Models
 
 The trained models can be downloaded under the following link: https://drive.google.com/drive/folders/1bN7N9OwT8r35elQZlTEnBpnNHpoBl0Pz?usp=share_link
-
-Place them in checkpoints directory.
+Place them in checkpoints directory. Download models and corresponding PARAMS Files.
 
 # Reproduce Competiton Results: The Predict Notebook
 
 The predict.ibynb notebook reproduces the competiton results.  
 Make sure you have the models downloaded and placed in the checkpoints folder together with their PARAM Files.
-This Notebook is the foundation for the docker container.
+The predict notebook is the foundation for the docker container.
 
 # Training Procedure
 
