@@ -47,6 +47,17 @@ def create_data_file(path_to_arguments, path_to_labels, output_path=None, drop_d
 
 
 def get_weights_inverse_num_of_samples(no_of_classes, samples_per_cls, power=1):
+    """
+    Calculate weights for each class based on the inverse of the number of samples in each class.
+
+    Args:
+        no_of_classes (int): The number of classes.
+        samples_per_cls (list of int): The number of samples in each class.
+        power (float, optional): The power to raise the number of samples to. Default is 1.
+
+    Returns:
+        array: An array of weights for each class based on the inverse of the number of samples.
+    """
     weights_for_samples = 1.0/np.array(np.power(samples_per_cls,power))
     weights_for_samples = weights_for_samples / np.sum(weights_for_samples) * no_of_classes
     return weights_for_samples

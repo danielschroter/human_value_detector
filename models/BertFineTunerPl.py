@@ -3,8 +3,6 @@ import pytorch_lightning as pl
 
 import numpy as np
 
-
-
 from transformers import (
     get_linear_schedule_with_warmup,
     AutoModel
@@ -13,9 +11,10 @@ import torch.nn as nn
 import torch.functional as F
 from torchmetrics import AUROC, F1Score
 from torch.optim import AdamW
-from sklearn.metrics import classification_report
 
+from sklearn.metrics import classification_report
 from toolbox.bert_utils import max_for_thres
+
 
 class BertFineTunerPl(pl.LightningModule):
 
@@ -24,11 +23,12 @@ class BertFineTunerPl(pl.LightningModule):
         self.bert = AutoModel.from_pretrained(params["MODEL_PATH"], return_dict=True)
         self.hidden_layers = nn.ModuleList()
 
-
         last_output = self.bert.config.hidden_size
         if params["EMBEDDING"]=="CLS + MEAN":
             last_output = last_output * 2
-
+            
+        
+        # Generate Hidden Layers based on params
         if params["HIDDEN_LAYERS"]:
             for (h_layer_size, activation) in params["HIDDEN_LAYERS"]:
                 if params["DROPOUT"]:
@@ -53,6 +53,8 @@ class BertFineTunerPl(pl.LightningModule):
 
     def forward(self, input_ids, attention_mask, labels=None):
         output = self.bert(input_ids, attention_mask=attention_mask)
+        
+        # Instead of using Pooler directly, we get CLS Token or Mean Pooling etc... 
         if self.params["EMBEDDING"]=="CLS":
             output = self._cls_embeddings(output) # Get CLS Token for Classification
         elif self.params["EMBEDDING"]=="MEAN":
@@ -101,8 +103,6 @@ class BertFineTunerPl(pl.LightningModule):
         loss, outputs = self(input_ids, attention_mask, labels)
         self.log("test_loss", loss, prog_bar=True, logger=True)
         return {"test_loss": loss, "predictions": outputs, "labels": labels}
-
-
 
     def validation_epoch_end(self, outputs):
         avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()

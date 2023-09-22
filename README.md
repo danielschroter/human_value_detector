@@ -15,9 +15,9 @@ Link to Docker Container: https://github.com/touche-webis-de/team-adam-smith23
   - [1.2 Get Data](#12-get-data)
   - [1.3 Get Models](#13-get-models)
 - [2. Reproduce Competition Results](#2-reproduce-competiton-results)
-- [3. Retrain Models from Scratch]()
+- [3. Retrain Models from Scratch](#3-retrain-from-scratch)
 
-![Alt text](/public/image.png)
+![Alt text](/graphics/demo.png)
 
 # 1. Set Up Project
 
@@ -46,6 +46,8 @@ So Make sure you have the models downloaded and placed in the checkpoints folder
 This notebook is the foundation for the docker container published in the context of the data science competition.
 
 # 3. Retrain from Scratch
+
+![Alt text](/graphics/architecture.png)
 
 If you want to understand the training-process and retrain the models yourself.
 The process is split into three steps:
