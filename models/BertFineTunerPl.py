@@ -48,6 +48,9 @@ class BertFineTunerPl(pl.LightningModule):
 
         self.params = params
         self.label_columns = label_columns
+        
+        self.validation_step_outputs=[]
+        self.training_step_outputs=[]
 
         # self.save_hyperparameters()
 
@@ -86,6 +89,7 @@ class BertFineTunerPl(pl.LightningModule):
         labels = batch["labels"]
         loss, outputs = self(input_ids, attention_mask, labels)
         self.log("train_loss", loss, prog_bar=True, logger=True)
+        self.training_step_outputs.append({"loss": loss, "predictions": outputs, "labels": labels})
         return {"loss": loss, "predictions": outputs, "labels": labels}
 
     def validation_step(self, batch, batch_idx):
@@ -94,6 +98,7 @@ class BertFineTunerPl(pl.LightningModule):
         labels = batch["labels"]
         loss, outputs = self(input_ids, attention_mask, labels)
         self.log("val_loss", loss, prog_bar=True, logger=True)
+        self.validation_step_outputs.append({"val_loss": loss, "predictions": outputs, "labels": labels})
         return {"val_loss": loss, "predictions": outputs, "labels": labels}
 
     def test_step(self, batch, batch_idx):
@@ -104,7 +109,8 @@ class BertFineTunerPl(pl.LightningModule):
         self.log("test_loss", loss, prog_bar=True, logger=True)
         return {"test_loss": loss, "predictions": outputs, "labels": labels}
 
-    def validation_epoch_end(self, outputs):
+    def on_validation_epoch_end(self):
+        outputs = self.validation_step_outputs
         avg_loss = torch.stack([x['val_loss'] for x in outputs]).mean()
 
         labels = []
@@ -182,11 +188,14 @@ class BertFineTunerPl(pl.LightningModule):
         auroc = AUROC(task="multilabel", num_labels=len(self.label_columns), average="macro")
         total_auroc_macro = auroc(predictions, labels)
         self.log(f"roc_auc_total_macro/Val", total_auroc_macro, logger=True)
+        
+        self.validation_step_outputs.clear()
 
         return {"avg_val_loss":avg_loss, "macro_avg_f1_val":val_macro_f1, "custom_f1_val":val_custom_f1, "roc_auc_total_micro_val":total_auroc_micro}
 
 
-    def training_epoch_end(self, outputs):
+    def on_train_epoch_end(self):
+        outputs=self.training_step_outputs
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
 
 
@@ -215,6 +224,7 @@ class BertFineTunerPl(pl.LightningModule):
         self.log(f"roc_auc_total_macro/Train", total_auroc, logger=True)
 
         self.log("avg_train_loss", avg_loss, logger=True)
+        self.training_step_outputs.clear()
 
 
     def configure_optimizers(self):
@@ -234,6 +244,11 @@ class BertFineTunerPl(pl.LightningModule):
                 interval='step'
             )
         )
+        
+    def lr_scheduler_step(self, scheduler, optimizer_idx, metric):
+    # Update the scheduler based on your custom logic
+        scheduler.step()
+
 
     def _cls_embeddings(self, output):
         '''Returns the embeddings corresponding to the <CLS> token of each text. '''
