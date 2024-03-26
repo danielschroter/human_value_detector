@@ -35,7 +35,7 @@ Get Data from Competition and place it in data directory: https://zenodo.org/rec
 
 ## 1.3 Get Models
 
-The trained models can be downloaded under the following link: https://drive.google.com/drive/folders/1bN7N9OwT8r35elQZlTEnBpnNHpoBl0Pz?usp=share_link
+The trained models can be downloaded under the following link: https://zenodo.org/records/7656534
 Place them in checkpoints directory. Download models and corresponding PARAMS Files.
 If you want to train the models yourself, you find the instructions in the section (#Training)
 
