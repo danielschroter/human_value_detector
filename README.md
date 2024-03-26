@@ -8,6 +8,8 @@ Link to WebDemo: https://values.args.me/
 
 Linkt to System Description Paper: https://arxiv.org/abs/2305.08625
 
+Link to HuggingfaceModel: https://huggingface.co/tum-nlp/Deberta_Human_Value_Detector
+
 Link to Docker Container: https://github.com/touche-webis-de/team-adam-smith23
 
 - [1. Set-Up](#1-set-up-project)
@@ -20,6 +22,8 @@ Link to Docker Container: https://github.com/touche-webis-de/team-adam-smith23
 ![Alt text](/graphics/demo.png)
 
 # 1. Set Up Project
+
+If you want the best performing single model, you might want to consider for ease-of-use the huggingface version: https://huggingface.co/tum-nlp/Deberta_Human_Value_Detector
 
 ## 1.1 Install dependencies
 
